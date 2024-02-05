@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import CountriesContext from "./providers/CountryProvider";
 
 export const DetailedCard = ({
   src,
@@ -11,13 +12,19 @@ export const DetailedCard = ({
   topdomain,
   languages,
   currency,
+  borders,
+  theme,
 }) => {
+  const { handleClearCountry } = useContext(CountriesContext);
+
   const lang = Object.keys(languages);
   const curren = Object.keys(currency);
+
+  console.log(borders);
   return (
     <div className="detailed">
-      <div className="backbtn">
-        <button>← Back</button>
+      <div className={`backbtn ${theme}`}>
+        <button onClick={handleClearCountry}>← Back</button>
       </div>
       <div className="detailedContent">
         <section className="detailedImg">
@@ -45,24 +52,39 @@ export const DetailedCard = ({
             </section>
 
             <section>
-              {" "}
               <h4>
                 Top Level Domain: <p>{topdomain}</p>
               </h4>
               <h4>
                 Currencies:{" "}
-                {curren.map((curr, index) => (
-                  <p key={index}>{curr},</p>
-                ))}
+                {curren.map((curr, index) =>
+                  index < curren.length - 1 ? (
+                    <p key={index}>{curr},</p>
+                  ) : (
+                    <p key={index}>{curr}.</p>
+                  )
+                )}
               </h4>
               <h4>
                 Languages:{" "}
-                {lang.map((lenguage, index) => (
-                  <p key={index}>{lenguage},</p>
-                ))}
+                {lang.map((lenguage, index) =>
+                  index < lang.length - 1 ? (
+                    <p key={index}>{lenguage},</p>
+                  ) : (
+                    <p key={index}>{lenguage}.</p>
+                  )
+                )}
               </h4>
             </section>
           </div>
+          {borders && (
+            <h4>
+              Borders:{" "}
+              {borders.map((border, index) => (
+                <div className={`border ${theme}`}>{border}</div>
+              ))}
+            </h4>
+          )}
         </section>
       </div>
     </div>

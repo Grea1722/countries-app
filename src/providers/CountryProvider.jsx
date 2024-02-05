@@ -2,19 +2,21 @@ import React, { createContext, useState } from "react";
 
 const CountriesContext = createContext({});
 
+const defaultState = {
+  src: "",
+  common: "",
+  official: "",
+  population: 0,
+  region: "",
+  subregion: "",
+  capital: "",
+  topdomain: "",
+  languages: [],
+  currency: [],
+};
+
 export function CountriesContextProvider({ children }) {
-  const [country, setCountry] = useState({
-    src: "",
-    common: "",
-    official: "",
-    population: 0,
-    region: "",
-    subregion: "",
-    capital: "",
-    topdomain: "",
-    languages: [],
-    currency: [],
-  });
+  const [country, setCountry] = useState(defaultState);
 
   const handleSetCountry = (newCountry) => {
     setCountry({
@@ -28,21 +30,12 @@ export function CountriesContextProvider({ children }) {
       topdomain: newCountry.tld,
       languages: newCountry.languages,
       currency: newCountry.currencies,
+      borders: newCountry.borders,
     });
-    console.log(newCountry);
   };
 
   const handleClearCountry = () => {
-    setCountry({
-      name: "",
-      nativeName: "",
-      population: 0,
-      region: "",
-      subRegion: " ",
-      capital: "",
-      topDomain: "",
-      languages: [""],
-    });
+    setCountry(defaultState);
   };
 
   const isCountryFilled = () => {

@@ -1,9 +1,9 @@
 import React from "react";
 import CircumIcon from "@klarr-agency/circum-icons-react";
 
-export const Form = ({ onChange, onSelect }) => {
+export const Form = ({ onChange, onSelect, theme }) => {
   return (
-    <div className="form">
+    <div className={`form ${theme}`}>
       <section className="search">
         <input
           type="text"

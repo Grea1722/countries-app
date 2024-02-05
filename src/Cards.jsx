@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Cards = ({ countryData, useClicker }) => {
+export const Cards = ({ countryData, useClicker, theme }) => {
   const {
     region,
     name,
@@ -31,9 +31,9 @@ export const Cards = ({ countryData, useClicker }) => {
   };
 
   return (
-    <div className="cards" onClick={() => useClicker(detailedInfo)}>
+    <div className={`cards ${theme}`} onClick={() => useClicker(detailedInfo)}>
       <img src={flag} alt={altFlag} />
-      <section>
+      <section className="cardsInfo">
         <h3>{common}</h3>
         <h4>
           Population: <p>{population}</p>
@@ -42,7 +42,7 @@ export const Cards = ({ countryData, useClicker }) => {
           Region: <p>{region}</p>
         </h4>
         <h4>
-          Capital: <p>{}</p>
+          Capital: <p>{capital}</p>
         </h4>
       </section>
     </div>

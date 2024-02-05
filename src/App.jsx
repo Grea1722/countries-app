@@ -1,6 +1,4 @@
 import { useContext, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import { Navbar } from "./Navbar";
 import { Countries } from "./Countries";
@@ -11,19 +9,27 @@ import { Route, Routes } from "react-router-dom";
 import { DetailedCard } from "./DetailedCard";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [theme, setTheme] = useState("light");
 
   const { country, isCountryFilled } = useContext(countriesContext);
 
   const isCountryFilledValues = isCountryFilled();
 
-  console.log(isCountryFilledValues);
+  const themeChange = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
+  };
 
   return (
     <>
-      <Navbar />
+      <Navbar themeChange={themeChange} theme={theme} />
 
-      {!isCountryFilledValues ? <Countries /> : <DetailedCard {...country} />}
+      <div className={`principal ${theme}`}>
+        {!isCountryFilledValues ? (
+          <Countries theme={theme} />
+        ) : (
+          <DetailedCard {...country} theme={theme} />
+        )}
+      </div>
     </>
   );
 }

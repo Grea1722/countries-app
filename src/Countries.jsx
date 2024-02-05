@@ -3,7 +3,7 @@ import { Cards } from "./Cards";
 import { Form } from "./Form";
 import countriesContext from "./providers/CountryProvider";
 
-export const Countries = () => {
+export const Countries = ({ theme }) => {
   const [countries, setCountries] = useState([]);
   const [searchCount, setSearchCount] = useState("");
   const [selectedCont, setSelectedCont] = useState("");
@@ -22,21 +22,17 @@ export const Countries = () => {
   }, [searchCount || selectedCont]);
 
   const filteredCountries = countries.filter((country) => {
-    if (searchCount) {
-      return country.name.common
-        .toLowerCase()
-        .includes(searchCount.toLowerCase());
-    }
-
-    if (selectedCont) {
-      return country.region === selectedCont;
-    }
-    return true;
+    return (
+      (searchCount
+        ? country.name.common.toLowerCase().includes(searchCount.toLowerCase())
+        : true) &&
+      // Filtrar por "selectedCont"
+      (selectedCont ? country.region === selectedCont : true)
+    );
   });
 
   const onChange = (e) => {
     setSearchCount(e.target.value);
-    console.log(e);
   };
 
   const onSelect = (e) => {
@@ -49,12 +45,20 @@ export const Countries = () => {
 
   return (
     <div className="countries-main">
-      <Form onChange={onChange} onSelect={onSelect} />
+      <Form onChange={onChange} theme={theme} onSelect={onSelect} />
       <div className="countries">
-        {" "}
-        {filteredCountries.map((country, index) => (
-          <Cards key={index} countryData={country} useClicker={onClicker} />
-        ))}
+        {filteredCountries.length > 0 ? (
+          filteredCountries.map((country, index) => (
+            <Cards
+              key={index}
+              theme={theme}
+              countryData={country}
+              useClicker={onClicker}
+            />
+          ))
+        ) : (
+          <div>No hay paises para mostrar</div>
+        )}
       </div>
     </div>
   );
